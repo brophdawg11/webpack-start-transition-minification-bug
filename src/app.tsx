@@ -4,19 +4,14 @@ import React, { FC, useCallback, useMemo, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { lazily } from 'react-lazily';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { LiveLoadingContainer } from './components/liveloading';
-import { CustomNavLink, CustomRouteHandler, LoginState } from './components/route';
+import { CustomNavLink, LoginState } from './components/route';
 import { UserInactiveAlert } from './components/user_inactive_alert';
 import { UserDetailsModel } from './models/user';
 import { APIAccessor } from './utils/api';
 import { AppContext, AppContextData } from './utils/context';
-
-const { LoginPage } = lazily(async () => import('./pages/login'));
-const { RegistrationPage } = lazily(async () => import('./pages/register'));
 
 const Routing: FC<{ user?: UserDetailsModel; userLoaded: boolean }> = () => {
     return (
@@ -29,12 +24,6 @@ const Routing: FC<{ user?: UserDetailsModel; userLoaded: boolean }> = () => {
                     <Navbar.Toggle aria-controls="navbar-nav" />
                     <Navbar.Collapse id="navbar-nav">
                         <Nav className="me-auto">
-                            <CustomNavLink login={LoginState.LoggedIn} to="/files">
-                                <span>Files</span>
-                            </CustomNavLink>
-                            <CustomNavLink login={LoginState.LoggedIn} to="/links">
-                                <span>Links</span>
-                            </CustomNavLink>
                             <CustomNavLink login={LoginState.LoggedOut} to="/login">
                                 <span>Login</span>
                             </CustomNavLink>
@@ -48,22 +37,9 @@ const Routing: FC<{ user?: UserDetailsModel; userLoaded: boolean }> = () => {
             <Container>
                 <UserInactiveAlert />
                 <Routes>
-                    <Route
-                        element={
-                            <CustomRouteHandler login={LoginState.LoggedOut}>
-                                <LoginPage />
-                            </CustomRouteHandler>
-                        }
-                        path="/login"
-                    />
-                    <Route
-                        element={
-                            <CustomRouteHandler login={LoginState.LoggedOut}>
-                                <RegistrationPage />
-                            </CustomRouteHandler>
-                        }
-                        path="/register"
-                    />
+                    <Route element={<h1>home</h1>} path="/" />
+                    <Route element={<h1>Login</h1>} path="/login" />
+                    <Route element={<h1>Register</h1>} path="/register" />
                 </Routes>
             </Container>
         </Router>
@@ -96,10 +72,8 @@ export const App: React.FC = () => {
 
     return (
         <AppContext.Provider value={context}>
-            <LiveLoadingContainer>
-                <Routing user={undefined} userLoaded={userLoaded} />
-                <ToastContainer position="bottom-right" theme="colored" />
-            </LiveLoadingContainer>
+            <Routing user={undefined} userLoaded={userLoaded} />
+            <ToastContainer position="bottom-right" theme="colored" />
         </AppContext.Provider>
     );
 };
