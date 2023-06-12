@@ -1,34 +1,38 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
+
+// Uncommenting these two lines breaks the production minified build
 import { LinkContainer } from "react-router-bootstrap";
-import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+console.log("LinkContainer", LinkContainer);
+
 const root = createRoot(document.getElementById("root")!);
 
-const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <LinkContainer to="/">
-        <span>foxCaves</span>
-      </LinkContainer>
-      &nbsp;
-      <NavLink to="/login">
-        <span>Login</span>
-      </NavLink>
-      &nbsp;
-      <NavLink to="/register">
-        <span>Register</span>
-      </NavLink>
-      <Routes>
-        <Route element={<h1>home</h1>} path="/" />
-        <Route element={<h1>Login</h1>} path="/login" />
-        <Route element={<h1>Register</h1>} path="/register" />
-      </Routes>
-    </BrowserRouter>
-  );
-};
+let router = createBrowserRouter([
+  {
+    path: "/*",
+    Component() {
+      return (
+        <>
+          <button onClick={() => router.navigate("/")}>Home</button>{" "}
+          <button onClick={() => router.navigate("/page")}>Page</button>
+          <p>current location: {useLocation().pathname}</p>
+        </>
+      );
+    },
+  },
+]);
+
+router.subscribe(({ location }) => {
+  console.log("router received new location:", location.pathname);
+});
 
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

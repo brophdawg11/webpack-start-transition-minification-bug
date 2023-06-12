@@ -1,3 +1,4 @@
+// import { EsbuildPlugin } from "esbuild-loader";
 // eslint-disable-next-line import/default
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { Configuration } from "webpack";
@@ -16,24 +17,15 @@ const config: Configuration = {
     ],
   },
   plugins: [new HtmlWebpackPlugin({ template: "src/index.html" })],
-  devServer: {
-    proxy: {
-      "/api": {
-        target: "https://foxcav.es:443",
-        changeOrigin: true,
-        headers: {
-          Host: "foxcav.es",
-        },
-      },
-      "/api/v1/ws": {
-        target: "wss://foxcav.es:443",
-        changeOrigin: true,
-        ws: true,
-        headers: {
-          Host: "foxcav.es",
-        },
-      },
-    },
+  optimization: {
+    // turning off minification resolves the issue
+    // minimize: false,
+    // Surprisingly enough minimizing with esbuild has the same issue
+    // minimizer: [
+    //   new EsbuildPlugin({
+    //     target: "es2015", // Syntax to compile to (see options below for possible values)
+    //   }),
+    // ],
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],

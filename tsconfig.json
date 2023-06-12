@@ -31,5 +31,5 @@
     "isolatedModules": true,
     "noEmit": false
   },
-  "include": ["src", "test", "webpack.*.ts", "playwright.*.ts"]
+  "include": ["src", "test", "webpack.*.ts"]
 }
