@@ -1,5 +1,3 @@
-import { logError } from './misc';
-
 export class HttpError extends Error {
     public constructor(public status: number, public message: string) {
         super(`HTTP Error: ${status} ${message}`);
@@ -84,7 +82,8 @@ export class APIAccessor {
                 const data = (await res.json()) as { error: string };
                 desc = data.error;
             } catch (error) {
-                logError(error as Error);
+                // eslint-disable-next-line no-console
+                console.error(error as Error);
             }
 
             throw new HttpError(res.status, desc ?? res.statusText);

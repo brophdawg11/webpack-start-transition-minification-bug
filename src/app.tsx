@@ -1,5 +1,3 @@
-import './resources/app.css';
-
 import React, { useMemo } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -30,9 +28,11 @@ export const App: React.FC = () => {
                 <LinkContainer to="/">
                     <Navbar.Brand>foxCaves</Navbar.Brand>
                 </LinkContainer>
+                &nbsp;
                 <CustomNavLink login={LoginState.LoggedOut} to="/login">
                     <span>Login</span>
                 </CustomNavLink>
+                &nbsp;
                 <CustomNavLink login={LoginState.LoggedOut} to="/register">
                     <span>Register</span>
                 </CustomNavLink>
