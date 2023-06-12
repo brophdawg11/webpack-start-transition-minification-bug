@@ -1,12 +1,11 @@
 import React from 'react';
-import { UserDetailsModel } from '../models/user';
 import { APIAccessor } from './api';
 
 export interface AppContextData {
-    user?: UserDetailsModel;
+    user?: undefined;
     userLoaded: boolean;
-    setUser: (user?: UserDetailsModel) => void;
-    refreshUser: () => Promise<void>;
+    setUser: () => void;
+    refreshUser: () => undefined;
     apiAccessor: APIAccessor;
 }
 
